@@ -12,56 +12,54 @@ import pl.projectspace.idea.plugins.commons.php.psi.exceptions.MissingElementExc
  */
 public abstract class MethodDecorator {
 
-    protected PhpClass target;
+	protected final MethodReference element;
+	protected PhpClass target;
+	protected Object returnType = null;
 
-    protected final MethodReference element;
+	public MethodDecorator(PsiElement element) throws InvalidArgumentException {
+		if (!(element instanceof MethodReference)) {
+			throw new InvalidArgumentException("Passed PsiElement should be an instance of MethodReference");
+		}
 
-    protected Object returnType = null;
+		this.element = (MethodReference) element;
+	}
 
-    public MethodDecorator(PsiElement element) throws InvalidArgumentException {
-        if (!(element instanceof MethodReference)) {
-            throw new InvalidArgumentException("Passed PsiElement should be an instance of MethodReference");
-        }
+	public PhpClass getTarget() {
+		if (target == null) {
+			target = PsiTreeUtil.getParentOfType(element, PhpClass.class);
+		}
 
-        this.element = (MethodReference) element;
-    }
+		return target;
+	}
 
-    public PhpClass getTarget() {
-        if (target == null) {
-            target = PsiTreeUtil.getParentOfType(element, PhpClass.class);
-        }
+	public boolean hasParameter(int no) {
+		return (element.getParameters().length > no);
+	}
 
-        return target;
-    }
+	public boolean hasParameter(int no, Class type) {
+		return (hasParameter(no) && type.isAssignableFrom(element.getParameters()[no].getClass()));
+	}
 
-    public boolean hasParameter(int no) {
-        return (element.getParameters().length > no);
-    }
+	public PsiElement getParameter(int no) {
+		return element.getParameters()[no];
+	}
 
-    public boolean hasParameter(int no, Class type) {
-        return (hasParameter(no) && type.isAssignableFrom(element.getParameters()[no].getClass()));
-    }
+	public boolean isResolvableToType() {
+		try {
+			return (getReturnType() != null);
+		} catch (MissingElementException e) {
+			return false;
+		}
+	}
 
-    public PsiElement getParameter(int no) {
-        return element.getParameters()[no];
-    }
+	public Object getReturnType() throws MissingElementException {
+		if (returnType == null) {
+			returnType = resolveType();
+		}
 
-    public boolean isResolvableToType() {
-        try {
-            return (getReturnType() != null);
-        } catch (MissingElementException e) {
-            return false;
-        }
-    }
+		return returnType;
+	}
 
-    public Object getReturnType() throws MissingElementException {
-        if (returnType == null) {
-            returnType = resolveType();
-        }
-
-        return returnType;
-    }
-
-    protected abstract Object resolveType() throws MissingElementException;
+	protected abstract Object resolveType() throws MissingElementException;
 
 }

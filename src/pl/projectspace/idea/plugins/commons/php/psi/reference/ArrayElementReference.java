@@ -16,93 +16,92 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ArrayElementReference implements PsiReference {
 
-    private PsiElement reference;
-    private PsiElement element;
+	private PsiElement reference;
+	private PsiElement element;
 
-    public ArrayElementReference(PsiElement reference, PsiElement element)
-    {
-        this.reference = reference;
-        this.element = element;
-    }
+	public ArrayElementReference(PsiElement reference, PsiElement element) {
+		this.reference = reference;
+		this.element = element;
+	}
 
-    /**
-     * @see com.intellij.psi.PsiReference#getRangeInElement()
-     * @return the full range incl. quotes.
-     */
-    @Override
-    public TextRange getRangeInElement() {
-        return new TextRange(1, this.element.getTextLength() - 1);
-    }
+	/**
+	 * @return the full range incl. quotes.
+	 * @see com.intellij.psi.PsiReference#getRangeInElement()
+	 */
+	@Override
+	public TextRange getRangeInElement() {
+		return new TextRange(1, this.element.getTextLength() - 1);
+	}
 
-    /**
-     * @see com.intellij.psi.PsiReference#resolve()
-     * @return the resolved template file or null
-     */
-    @Override
-    public PsiElement resolve() {
-        return reference;
-    }
+	/**
+	 * @return the resolved template file or null
+	 * @see com.intellij.psi.PsiReference#resolve()
+	 */
+	@Override
+	public PsiElement resolve() {
+		return reference;
+	}
 
-    /**
-     * @see com.intellij.psi.PsiReference#getCanonicalText()
-     * @return Plain text representation.
-     */
-    @NotNull
-    @Override
-    public String getCanonicalText() {
-        return ((StringLiteralExpression)this.element).getContents();
-    }
+	/**
+	 * @return Plain text representation.
+	 * @see com.intellij.psi.PsiReference#getCanonicalText()
+	 */
+	@NotNull
+	@Override
+	public String getCanonicalText() {
+		return ((StringLiteralExpression) this.element).getContents();
+	}
 
-    /**
-     * @see com.intellij.psi.PsiReference#handleElementRename(String)
-     * @param newElementName
-     * @return the new string literal with the new text
-     * @throws com.intellij.util.IncorrectOperationException
-     */
-    @Override
-    public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
-        ASTNode node = this.element.getNode();
-        StringLiteralExpressionImpl se = new StringLiteralExpressionImpl(node);
+	/**
+	 * @param newElementName
+	 * @return the new string literal with the new text
+	 * @throws com.intellij.util.IncorrectOperationException
+	 * @see com.intellij.psi.PsiReference#handleElementRename(String)
+	 */
+	@Override
+	public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+		ASTNode node = this.element.getNode();
+		StringLiteralExpressionImpl se = new StringLiteralExpressionImpl(node);
 
-        String[] parts = this.element.getText().split(":");
-        StringBuilder sb = new StringBuilder(parts[0]).append(":").append(parts[1]).append(":");
-        sb.append(newElementName);
-        se.updateText(sb.toString());
-        this.element = se;
-        return this.element;
-    }
+		String[] parts = this.element.getText().split(":");
+		StringBuilder sb = new StringBuilder(parts[0]).append(":").append(parts[1]).append(":");
+		sb.append(newElementName);
+		se.updateText(sb.toString());
+		this.element = se;
+		return this.element;
+	}
 
-    @Override
-    public PsiElement bindToElement(@NotNull PsiElement psiElement) throws IncorrectOperationException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@Override
+	public PsiElement bindToElement(@NotNull PsiElement psiElement) throws IncorrectOperationException {
+		return null;  //To change body of implemented methods use File | Settings | File Templates.
+	}
 
-    @Override
-    public boolean isReferenceTo(PsiElement element) {
-        if (element instanceof PhpClass) {
-            ((PhpClass) element).getName().equals(((StringLiteralExpression)this.element).getContents());
-        }
-        return false;
-    }
+	@Override
+	public boolean isReferenceTo(PsiElement element) {
+		if (element instanceof PhpClass) {
+			((PhpClass) element).getName().equals(((StringLiteralExpression) this.element).getContents());
+		}
+		return false;
+	}
 
 
-    @NotNull
-    @Override
-    public Object[] getVariants() {
-        return ArrayUtil.EMPTY_OBJECT_ARRAY;
-    }
+	@NotNull
+	@Override
+	public Object[] getVariants() {
+		return ArrayUtil.EMPTY_OBJECT_ARRAY;
+	}
 
-    @Override
-    public boolean isSoft() {
-        return true;
-    }
+	@Override
+	public boolean isSoft() {
+		return true;
+	}
 
-    /**
-     * @see com.intellij.psi.PsiReference#getElement()
-     * @return the full source element
-     */
-    @Override
-    public PsiElement getElement() {
-        return element;
-    }
+	/**
+	 * @return the full source element
+	 * @see com.intellij.psi.PsiReference#getElement()
+	 */
+	@Override
+	public PsiElement getElement() {
+		return element;
+	}
 }

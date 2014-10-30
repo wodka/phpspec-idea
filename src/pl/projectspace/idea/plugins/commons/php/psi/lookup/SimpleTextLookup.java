@@ -8,15 +8,15 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SimpleTextLookup extends LookupElement {
 
-    private String text;
+	private String text;
 
-    public SimpleTextLookup(String text){
-        this.text = text;
-    }
+	public SimpleTextLookup(String text) {
+		this.text = text;
+	}
 
-    @NotNull
-    @Override
-    public String getLookupString() {
-        return text;
-    }
+	@NotNull
+	@Override
+	public String getLookupString() {
+		return text;
+	}
 }

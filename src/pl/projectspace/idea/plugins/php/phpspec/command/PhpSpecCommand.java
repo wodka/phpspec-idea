@@ -7,13 +7,13 @@ import com.intellij.openapi.project.Project;
  */
 public abstract class PhpSpecCommand {
 
-    protected final Project project;
+	protected final Project project;
 
-    public PhpSpecCommand(Project project) {
-        this.project = project;
-    }
+	public PhpSpecCommand(Project project) {
+		this.project = project;
+	}
 
-    protected abstract String getProgressTitle();
+	protected abstract String getProgressTitle();
 
 //    protected abstract String getActionName();
 

@@ -21,29 +21,29 @@ import java.util.List;
  */
 public abstract class GenericMethodArgumentCompletionProvider extends CompletionProvider<CompletionParameters> {
 
-    @Override
-    protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext processingContext, @NotNull CompletionResultSet completionResultSet) {
-        MethodReference method = PsiTreeUtil.getParentOfType(parameters.getPosition(), MethodReference.class);
-        if (method == null || !isEnabled(method)) {
-            return;
-        }
+	@Override
+	protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext processingContext, @NotNull CompletionResultSet completionResultSet) {
+		MethodReference method = PsiTreeUtil.getParentOfType(parameters.getPosition(), MethodReference.class);
+		if (method == null || !isEnabled(method)) {
+			return;
+		}
 
-        RequireMethod methodAnnotation = this.getClass().getAnnotation(RequireMethod.class);
-        if (methodAnnotation != null && !methodAnnotation.value().equalsIgnoreCase(method.getName())) {
-            return;
-        }
+		RequireMethod methodAnnotation = this.getClass().getAnnotation(RequireMethod.class);
+		if (methodAnnotation != null && !methodAnnotation.value().equalsIgnoreCase(method.getName())) {
+			return;
+		}
 
-        for (String item : getCompletions(method)) {
-            completionResultSet.addElement(new SimpleTextLookup(item));
-        }
-    }
+		for (String item : getCompletions(method)) {
+			completionResultSet.addElement(new SimpleTextLookup(item));
+		}
+	}
 
-    protected boolean isEnabled(PsiElement element) {
-        DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
-        BaseComponent component = element.getProject().getComponent(annotation.value());
+	protected boolean isEnabled(PsiElement element) {
+		DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
+		BaseComponent component = element.getProject().getComponent(annotation.value());
 
-        return ((StateComponentInterface) component).isEnabled();
-    }
+		return ((StateComponentInterface) component).isEnabled();
+	}
 
-    protected abstract List<String> getCompletions(MethodReference method);
+	protected abstract List<String> getCompletions(MethodReference method);
 }

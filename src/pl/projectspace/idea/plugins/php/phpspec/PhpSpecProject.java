@@ -9,24 +9,24 @@ import pl.projectspace.idea.plugins.php.phpspec.config.PhpSpec;
 
 public class PhpSpecProject extends ProjectComponent implements StateComponentInterface {
 
-    private final PhpSpec config;
+	private final PhpSpec config;
 
-    public PhpSpecProject(Project project, PhpIndex index) {
-        super(project, index);
-        config = new PhpSpec(project);
-    }
+	public PhpSpecProject(Project project, PhpIndex index) {
+		super(project, index);
+		config = new PhpSpec(project);
+	}
 
-    @NotNull
-    @Override
-    public String getComponentName() {
-        return "phpspec";
-    }
+	@NotNull
+	@Override
+	public String getComponentName() {
+		return "phpspec";
+	}
 
-    public boolean isEnabled() {
-        return true;
-    }
+	public boolean isEnabled() {
+		return true;
+	}
 
-    public PhpSpec getConfig() {
-        return config;
-    }
+	public PhpSpec getConfig() {
+		return config;
+	}
 }

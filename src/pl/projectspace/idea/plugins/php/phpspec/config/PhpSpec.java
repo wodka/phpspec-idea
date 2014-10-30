@@ -7,13 +7,13 @@ import com.intellij.openapi.project.Project;
  */
 public class PhpSpec {
 
-    private Project project;
+	private Project project;
 
-    public PhpSpec(Project project) {
-        this.project = project;
-    }
+	public PhpSpec(Project project) {
+		this.project = project;
+	}
 
-    public String getSpecsDir() {
-        return "spec/";
-    }
+	public String getSpecsDir() {
+		return "spec/";
+	}
 }

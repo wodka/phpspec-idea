@@ -12,26 +12,26 @@ import pl.projectspace.idea.plugins.commons.php.utils.annotation.DependsOnPlugin
 import javax.swing.*;
 
 public abstract class PluginIconProvider extends IconProvider {
-    @Nullable
-    @Override
-    public Icon getIcon(@NotNull PsiElement psiElement, @Iconable.IconFlags int i) {
-        if (!isEnabled(psiElement)) {
-            return null;
-        }
+	@Nullable
+	@Override
+	public Icon getIcon(@NotNull PsiElement psiElement, @Iconable.IconFlags int i) {
+		if (!isEnabled(psiElement)) {
+			return null;
+		}
 
-        return getIconForElement(psiElement, i);
-    }
+		return getIconForElement(psiElement, i);
+	}
 
-    protected abstract Icon getIconForElement(@NotNull PsiElement element, @Iconable.IconFlags int i);
+	protected abstract Icon getIconForElement(@NotNull PsiElement element, @Iconable.IconFlags int i);
 
-    private boolean isEnabled(PsiElement psiElement) {
-        DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
+	private boolean isEnabled(PsiElement psiElement) {
+		DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
 
-        BaseComponent component = psiElement.getProject().getComponent(annotation.value());
-        if (component instanceof StateComponentInterface) {
-            return ((StateComponentInterface) component).isEnabled();
-        }
+		BaseComponent component = psiElement.getProject().getComponent(annotation.value());
+		if (component instanceof StateComponentInterface) {
+			return ((StateComponentInterface) component).isEnabled();
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

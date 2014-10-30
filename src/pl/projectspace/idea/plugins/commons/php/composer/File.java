@@ -13,31 +13,31 @@ import java.io.InputStreamReader;
  */
 public class File {
 
-    private final String path;
+	private final String path;
 
-    public File(String path) {
-        this.path = path;
-    }
+	public File(String path) {
+		this.path = path;
+	}
 
-    public Composer parse() {
-        try {
-            InputStreamReader is = new InputStreamReader(
-                    new FileInputStream(this.path)
-            );
+	public Composer parse() {
+		try {
+			InputStreamReader is = new InputStreamReader(
+					new FileInputStream(this.path)
+			);
 
-            GsonBuilder gson = new GsonBuilder();
-            gson.registerTypeAdapter(Require.class, new RequireConverter());
+			GsonBuilder gson = new GsonBuilder();
+			gson.registerTypeAdapter(Require.class, new RequireConverter());
 
-            Gson parser = gson.create();
+			Gson parser = gson.create();
 
-            Composer composer = parser.fromJson(is, Composer.class);
-            composer.setFile(this.path);
+			Composer composer = parser.fromJson(is, Composer.class);
+			composer.setFile(this.path);
 
-            return composer;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+			return composer;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

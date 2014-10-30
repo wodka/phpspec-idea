@@ -7,12 +7,12 @@ import org.apache.commons.lang.WordUtils;
  */
 public class PhpStringUtils {
 
-    public static String normaliseToClassName(String str) {
-        return WordUtils.capitalize(str).trim().replaceAll(" ", "");
-    }
+	public static String normaliseToClassName(String str) {
+		return WordUtils.capitalize(str).trim().replaceAll(" ", "");
+	}
 
-    public static boolean belongsToNamespace(String fqn, String namespace) {
-        return fqn.replaceAll("^\\\\", "").startsWith(namespace.replaceAll("^\\\\", ""));
-    }
+	public static boolean belongsToNamespace(String fqn, String namespace) {
+		return fqn.replaceAll("^\\\\", "").startsWith(namespace.replaceAll("^\\\\", ""));
+	}
 
 }

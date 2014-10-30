@@ -14,13 +14,13 @@ import java.util.ArrayList;
  */
 public class YamlCompletionProvider extends CompletionProvider<CompletionParameters> {
 
-    private ArrayList<LookupElement> lookupElements;
+	private ArrayList<LookupElement> lookupElements;
 
-    YamlCompletionProvider(ArrayList<LookupElement> lookups) {
-        lookupElements = lookups;
-    }
+	YamlCompletionProvider(ArrayList<LookupElement> lookups) {
+		lookupElements = lookups;
+	}
 
-    public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
-        resultSet.addAllElements(lookupElements);
-    }
+	public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
+		resultSet.addAllElements(lookupElements);
+	}
 }

@@ -18,61 +18,61 @@ import pl.projectspace.idea.plugins.commons.php.utils.annotation.RequireMethod;
  */
 public abstract class GenericMethodParameterInspection extends LocalInspectionTool {
 
-    @NotNull
-    @Override
-    public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
-        return new MethodParameterVisitor(holder);
-    }
+	@NotNull
+	@Override
+	public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
+		return new MethodParameterVisitor(holder);
+	}
 
-    public final class MethodParameterVisitor extends PhpElementVisitor {
+	protected abstract MethodDecorator createDecoratedMethod(MethodReference reference) throws MissingElementException, InvalidArgumentException;
 
-        private ProblemsHolder holder;
+	protected abstract void registerProblem(ProblemsHolder holder, MethodDecorator element);
 
-        public MethodParameterVisitor(ProblemsHolder holder) {
-            this.holder = holder;
-        }
+	protected boolean isEnabled(MethodReference methodReference) {
+		RequireMethod methodAnnotation = getClass().getAnnotation(RequireMethod.class);
+		if (methodAnnotation == null || !methodAnnotation.value().equalsIgnoreCase(methodReference.getName())) {
+			return false;
+		}
 
-        @Override
-        public void visitPhpMethodReference(MethodReference methodReference) {
+		DependsOnPlugin pluginAnnotation = getClass().getAnnotation(DependsOnPlugin.class);
+		if (pluginAnnotation == null || !((StateComponentInterface) methodReference.getProject().getComponent(pluginAnnotation.value())).isEnabled()) {
+			return false;
+		}
 
-            if (!isEnabled(methodReference)) {
-                return;
-            }
+		return true;
+	}
 
-            MethodDecorator method = null;
-            try {
-                method = createDecoratedMethod(methodReference);
+	public final class MethodParameterVisitor extends PhpElementVisitor {
 
-                if (method.isResolvableToType()) {
-                    return;
-                }
-            } catch (MissingElementException e) {
-            } catch (InvalidArgumentException e) {
-            }
+		private ProblemsHolder holder;
 
-            if (method != null) {
-                registerProblem(holder, method);
-            }
-        }
+		public MethodParameterVisitor(ProblemsHolder holder) {
+			this.holder = holder;
+		}
 
-    }
+		@Override
+		public void visitPhpMethodReference(MethodReference methodReference) {
 
-    protected abstract MethodDecorator createDecoratedMethod(MethodReference reference) throws MissingElementException, InvalidArgumentException;
+			if (!isEnabled(methodReference)) {
+				return;
+			}
 
-    protected abstract void registerProblem(ProblemsHolder holder, MethodDecorator element);
+			MethodDecorator method = null;
+			try {
+				method = createDecoratedMethod(methodReference);
 
-    protected boolean isEnabled(MethodReference methodReference) {
-        RequireMethod methodAnnotation = getClass().getAnnotation(RequireMethod.class);
-        if (methodAnnotation == null || !methodAnnotation.value().equalsIgnoreCase(methodReference.getName())) {
-            return false;
-        }
+				if (method.isResolvableToType()) {
+					return;
+				}
+			} catch (MissingElementException e) {
+			} catch (InvalidArgumentException e) {
+			}
 
-        DependsOnPlugin pluginAnnotation = getClass().getAnnotation(DependsOnPlugin.class);
-        if (pluginAnnotation == null || !((StateComponentInterface) methodReference.getProject().getComponent(pluginAnnotation.value())).isEnabled()) {
-            return false;
-        }
+			if (method != null) {
+				registerProblem(holder, method);
+			}
+		}
 
-        return true;
-    }
+	}
 
 }

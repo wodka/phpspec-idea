@@ -7,9 +7,9 @@ import com.jetbrains.php.PhpIndex;
  */
 abstract public class GenericObjectLocator implements ObjectLocatorInterface {
 
-    protected PhpIndex index;
+	protected PhpIndex index;
 
-    public GenericObjectLocator(PhpIndex index) {
-        this.index = index;
-    }
+	public GenericObjectLocator(PhpIndex index) {
+		this.index = index;
+	}
 }

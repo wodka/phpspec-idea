@@ -11,20 +11,20 @@ import pl.projectspace.idea.plugins.commons.php.utils.annotation.DependsOnPlugin
 
 public abstract class PhpClassInspection extends LocalInspectionTool {
 
-    @NotNull
-    @Override
-    public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
-        DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
+	@NotNull
+	@Override
+	public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
+		DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
 
-        BaseComponent component = holder.getProject().getComponent(annotation.value());
-        if (component instanceof StateComponentInterface) {
-            if (((StateComponentInterface) component).isEnabled()) {
-                return getVisitor(holder);
-            }
-        }
+		BaseComponent component = holder.getProject().getComponent(annotation.value());
+		if (component instanceof StateComponentInterface) {
+			if (((StateComponentInterface) component).isEnabled()) {
+				return getVisitor(holder);
+			}
+		}
 
-        return new DummyPhpElementVisitor();
-    }
+		return new DummyPhpElementVisitor();
+	}
 
-    protected abstract PhpElementVisitor getVisitor(@NotNull ProblemsHolder holder);
+	protected abstract PhpElementVisitor getVisitor(@NotNull ProblemsHolder holder);
 }

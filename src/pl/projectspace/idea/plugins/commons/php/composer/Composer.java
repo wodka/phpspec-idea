@@ -9,57 +9,51 @@ import java.util.Collection;
  */
 public class Composer {
 
-    private String path;
+	private String path;
+	private String configFile;
+	private String name;
+	private String description;
+	private String version;
+	private Type type;
+	private String keywords;
+	private String homepage;
+	private String license;
+	private Configuration config = new Configuration();
+	@SerializedName("minimum-stability")
+	private String minimumStability;
+	private Require require;
 
-    enum Type {
-        LIBRARY,
-        PROJECT,
-        METAPACKAGE,
-        COMPOSER_INSTALLER
-    }
+	public Composer() {
 
-    private String configFile;
+	}
 
-    private String name;
-    private String description;
-    private String version;
-    private Type type;
-    private String keywords;
-    private String homepage;
-    private String license;
+	public void setFile(String path) {
+		this.path = path;
+	}
 
-    private Configuration config = new Configuration();
+	public Collection<Package> getRequiredPackages() {
+		return require.getCollection();
+	}
 
+	public boolean isRequired(String packageName) {
+		return require.hasPackage(packageName);
+	}
 
-    @SerializedName("minimum-stability")
-    private String minimumStability;
+	public String getMinimumStability() {
+		return minimumStability;
+	}
 
-    private Require require;
-
-    public Composer() {
-
-    }
-
-    public void setFile(String path) {
-        this.path = path;
-    }
-
-    public Collection<Package> getRequiredPackages() {
-        return require.getCollection();
-    }
-
-    public boolean isRequired(String packageName) {
-        return require.hasPackage(packageName);
-    }
-
-    public String getMinimumStability() {
-        return minimumStability;
-    }
+	public Configuration getConfig() {
+		return config;
+	}
 
 //    public String get
 
-    public Configuration getConfig() {
-        return config;
-    }
+	enum Type {
+		LIBRARY,
+		PROJECT,
+		METAPACKAGE,
+		COMPOSER_INSTALLER
+	}
 
 }

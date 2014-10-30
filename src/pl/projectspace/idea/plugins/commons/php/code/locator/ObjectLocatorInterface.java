@@ -7,6 +7,6 @@ import pl.projectspace.idea.plugins.commons.php.psi.exceptions.MissingElementExc
  */
 public interface ObjectLocatorInterface {
 
-    public <T>T locate(String name) throws MissingElementException;
+	public <T> T locate(String name) throws MissingElementException;
 
 }

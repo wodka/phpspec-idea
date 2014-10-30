@@ -15,43 +15,41 @@ import java.util.Map;
  */
 public class PhpSpecStaticCompletionProvider {
 
-    private PhpIndex index;
-    private PsiTreeUtils utils;
+	public final static String OBJECT_BEHAVIOUR_CLASS = "\\PhpSpec\\ObjectBehavior";
+	private PhpIndex index;
+	private PsiTreeUtils utils;
+	private Map<String, List<Method>> map;
 
-    private Map<String, List<Method>> map;
+	public PhpSpecStaticCompletionProvider(PhpIndex index, PsiTreeUtils utils) {
+		this.index = index;
+		this.utils = utils;
 
-    public final static String OBJECT_BEHAVIOUR_CLASS = "\\PhpSpec\\ObjectBehavior";
+		PhpClass objectBehaviourClass = utils.getClassByFQN(OBJECT_BEHAVIOUR_CLASS);
 
-    public PhpSpecStaticCompletionProvider(PhpIndex index, PsiTreeUtils utils) {
-        this.index = index;
-        this.utils = utils;
+		map = new HashMap<String, List<Method>>();
+		map.put(objectBehaviourClass.getFQN(), buildCompletionFor(objectBehaviourClass));
+	}
 
-        PhpClass objectBehaviourClass = utils.getClassByFQN(OBJECT_BEHAVIOUR_CLASS);
+	public List<Method> getMethodsFor(PhpClass phpClass) {
+		return getMethodsFor(phpClass.getFQN());
+	}
 
-        map = new HashMap<String, List<Method>>();
-        map.put(objectBehaviourClass.getFQN(), buildCompletionFor(objectBehaviourClass));
-    }
+	public List<Method> getMethodsFor(String className) {
+		if (!map.containsKey(className)) {
+			return null;
+		}
 
-    public List<Method> getMethodsFor(PhpClass phpClass) {
-        return getMethodsFor(phpClass.getFQN());
-    }
+		return map.get(className);
+	}
 
-    public List<Method> getMethodsFor(String className) {
-        if (!map.containsKey(className)) {
-            return null;
-        }
+	private List<Method> buildCompletionFor(PhpClass phpClass) {
+		List<Method> list = new ArrayList<Method>();
+		for (Method method : phpClass.getMethods()) {
+			if (method.getAccess().isWeakerThan(PhpModifier.Access.PROTECTED)) {
+				list.add(method);
+			}
+		}
 
-        return map.get(className);
-    }
-
-    private List<Method> buildCompletionFor(PhpClass phpClass) {
-        List<Method> list = new ArrayList<Method>();
-        for (Method method : phpClass.getMethods()) {
-            if (method.getAccess().isWeakerThan(PhpModifier.Access.PROTECTED)) {
-                list.add(method);
-            }
-        }
-
-        return list;
-    }
+		return list;
+	}
 }

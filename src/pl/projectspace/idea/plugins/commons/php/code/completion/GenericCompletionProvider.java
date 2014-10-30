@@ -13,25 +13,25 @@ import pl.projectspace.idea.plugins.commons.php.utils.annotation.DependsOnPlugin
 
 public abstract class GenericCompletionProvider extends CompletionProvider<CompletionParameters> {
 
-    public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
-        if (!isEnabled(parameters.getPosition())) {
-            return;
-        }
+	public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
+		if (!isEnabled(parameters.getPosition())) {
+			return;
+		}
 
-        addCompletionsFor(parameters, context, resultSet);
-    }
+		addCompletionsFor(parameters, context, resultSet);
+	}
 
-    protected boolean isEnabled(PsiElement element) {
-        DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
+	protected boolean isEnabled(PsiElement element) {
+		DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
 
-        BaseComponent component = element.getProject().getComponent(annotation.value());
-        if (component instanceof StateComponentInterface) {
-            return ((StateComponentInterface) component).isEnabled();
-        }
+		BaseComponent component = element.getProject().getComponent(annotation.value());
+		if (component instanceof StateComponentInterface) {
+			return ((StateComponentInterface) component).isEnabled();
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    protected abstract void addCompletionsFor(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet);
+	protected abstract void addCompletionsFor(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet);
 
 }

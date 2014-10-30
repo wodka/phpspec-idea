@@ -14,59 +14,59 @@ import org.jetbrains.annotations.Nullable;
  */
 public class PhpMethodReference implements PsiReference {
 
-    protected PsiElement method;
-    protected PsiElement name;
+	protected PsiElement method;
+	protected PsiElement name;
 
-    public PhpMethodReference(@NotNull Method method, @NotNull final PsiElement name) {
-        this.method = method;
-        this.name = name;
-    }
+	public PhpMethodReference(@NotNull Method method, @NotNull final PsiElement name) {
+		this.method = method;
+		this.name = name;
+	}
 
-    @Override
-    public PsiElement getElement() {
-        return name;
-    }
+	@Override
+	public PsiElement getElement() {
+		return name;
+	}
 
-    @Override
-    public TextRange getRangeInElement() {
-        return new TextRange(1, this.name.getTextLength() - 1);
-    }
+	@Override
+	public TextRange getRangeInElement() {
+		return new TextRange(1, this.name.getTextLength() - 1);
+	}
 
-    @Nullable
-    @Override
-    public PsiElement resolve() {
-        return method;
-    }
+	@Nullable
+	@Override
+	public PsiElement resolve() {
+		return method;
+	}
 
-    @NotNull
-    @Override
-    public String getCanonicalText() {
-        return ((StringLiteralExpression)name).getContents();
-    }
+	@NotNull
+	@Override
+	public String getCanonicalText() {
+		return ((StringLiteralExpression) name).getContents();
+	}
 
-    @Override
-    public PsiElement handleElementRename(String s) throws IncorrectOperationException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@Override
+	public PsiElement handleElementRename(String s) throws IncorrectOperationException {
+		return null;  //To change body of implemented methods use File | Settings | File Templates.
+	}
 
-    @Override
-    public PsiElement bindToElement(@NotNull PsiElement psiElement) throws IncorrectOperationException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@Override
+	public PsiElement bindToElement(@NotNull PsiElement psiElement) throws IncorrectOperationException {
+		return null;  //To change body of implemented methods use File | Settings | File Templates.
+	}
 
-    @Override
-    public boolean isReferenceTo(PsiElement psiElement) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@Override
+	public boolean isReferenceTo(PsiElement psiElement) {
+		return false;  //To change body of implemented methods use File | Settings | File Templates.
+	}
 
-    @NotNull
-    @Override
-    public Object[] getVariants() {
-        return new Object[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@NotNull
+	@Override
+	public Object[] getVariants() {
+		return new Object[0];  //To change body of implemented methods use File | Settings | File Templates.
+	}
 
-    @Override
-    public boolean isSoft() {
-        return true;
-    }
+	@Override
+	public boolean isSoft() {
+		return true;
+	}
 }

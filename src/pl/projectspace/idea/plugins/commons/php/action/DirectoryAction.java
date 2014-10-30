@@ -13,51 +13,51 @@ import com.intellij.psi.PsiFile;
  */
 public abstract class DirectoryAction extends AnAction {
 
-    protected Project project;
+	protected Project project;
 
-    @Override
-    public void actionPerformed(AnActionEvent anActionEvent) {
-        project = anActionEvent.getProject();
+	@Override
+	public void actionPerformed(AnActionEvent anActionEvent) {
+		project = anActionEvent.getProject();
 
-        DialogWrapper dialog = (DialogWrapper) getDialog();
-        dialog.show();
+		DialogWrapper dialog = (DialogWrapper) getDialog();
+		dialog.show();
 
-        if (dialog.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
-            onOk(dialog);
-        }
-    }
+		if (dialog.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
+			onOk(dialog);
+		}
+	}
 
-    protected String getRelativeDirectory() {
-        PsiDirectory selected = getSelectedDirectory();
+	protected String getRelativeDirectory() {
+		PsiDirectory selected = getSelectedDirectory();
 
-        if (selected == null) {
+		if (selected == null) {
 
-        }
+		}
 
-        return getSelectedDirectory().getVirtualFile().getPath().replace(project.getBasePath(), "");
-    }
+		return getSelectedDirectory().getVirtualFile().getPath().replace(project.getBasePath(), "");
+	}
 
-    protected PsiDirectory getSelectedDirectory() {
-        ProjectView view = ProjectView.getInstance(project);
-        PsiDirectory[] selected = view.getCurrentProjectViewPane().getSelectedDirectories();
+	protected PsiDirectory getSelectedDirectory() {
+		ProjectView view = ProjectView.getInstance(project);
+		PsiDirectory[] selected = view.getCurrentProjectViewPane().getSelectedDirectories();
 
-        if (selected.length == 0) {
-            Object[] elements = view.getCurrentProjectViewPane().getSelectedElements();
-            for (Object element : elements) {
-                if (element instanceof PsiFile) {
-                    return ((PsiFile) element).getContainingDirectory();
-                }
-            }
-            return null;
-        }
+		if (selected.length == 0) {
+			Object[] elements = view.getCurrentProjectViewPane().getSelectedElements();
+			for (Object element : elements) {
+				if (element instanceof PsiFile) {
+					return ((PsiFile) element).getContainingDirectory();
+				}
+			}
+			return null;
+		}
 
-        return selected[0];
-    }
+		return selected[0];
+	}
 
-    protected abstract DialogWrapper getDialog();
+	protected abstract DialogWrapper getDialog();
 
-    protected abstract String getActionDirectory();
+	protected abstract String getActionDirectory();
 
-    protected abstract void onOk(DialogWrapper dialog);
+	protected abstract void onOk(DialogWrapper dialog);
 
 }

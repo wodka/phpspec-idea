@@ -20,19 +20,19 @@ import pl.projectspace.idea.plugins.php.phpspec.core.services.PhpSpecStaticCompl
 @DependsOnPlugin("phpspec")
 public class SpecCompletionProvider extends GenericCompletionProvider {
 
-    protected void addCompletionsFor(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
-        PsiElement element = parameters.getPosition();
+	protected void addCompletionsFor(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
+		PsiElement element = parameters.getPosition();
 
-        if (element.getPrevSibling() == null || element.getPrevSibling().getPrevSibling() == null
-            || !(element.getPrevSibling().getPrevSibling() instanceof Variable)) {
-            return;
-        }
+		if (element.getPrevSibling() == null || element.getPrevSibling().getPrevSibling() == null
+				|| !(element.getPrevSibling().getPrevSibling() instanceof Variable)) {
+			return;
+		}
 
-        PhpSpecStaticCompletionProvider staticCompletionProvider
-            = element.getProject().getComponent(PhpSpecProject.class).getService(PhpSpecStaticCompletionProvider.class);
+		PhpSpecStaticCompletionProvider staticCompletionProvider
+				= element.getProject().getComponent(PhpSpecProject.class).getService(PhpSpecStaticCompletionProvider.class);
 
-        for (Method method : staticCompletionProvider.getMethodsFor(PhpSpecStaticCompletionProvider.OBJECT_BEHAVIOUR_CLASS)) {
-            resultSet.addElement(new SimpleTextLookup(method.getName()));
-        }
-    }
+		for (Method method : staticCompletionProvider.getMethodsFor(PhpSpecStaticCompletionProvider.OBJECT_BEHAVIOUR_CLASS)) {
+			resultSet.addElement(new SimpleTextLookup(method.getName()));
+		}
+	}
 }

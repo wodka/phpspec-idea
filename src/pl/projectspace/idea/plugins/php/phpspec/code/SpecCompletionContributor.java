@@ -9,10 +9,10 @@ import com.intellij.patterns.PlatformPatterns;
  */
 public class SpecCompletionContributor extends CompletionContributor {
 
-    public SpecCompletionContributor() {
-        SpecCompletionProvider p = new SpecCompletionProvider();
+	public SpecCompletionContributor() {
+		SpecCompletionProvider p = new SpecCompletionProvider();
 
-        extend(CompletionType.BASIC, PlatformPatterns.psiElement(), p);
-    }
+		extend(CompletionType.BASIC, PlatformPatterns.psiElement(), p);
+	}
 
 }

@@ -16,37 +16,37 @@ import pl.projectspace.idea.plugins.php.phpspec.core.services.PhpSpecLocator;
 @DependsOnPlugin("phpspec")
 public class PhpSpecClassInspection extends PhpClassInspection {
 
-    @Override
-    protected PhpElementVisitor getVisitor(@NotNull ProblemsHolder holder) {
-        return new ClassInspector(holder);
-    }
+	@Override
+	protected PhpElementVisitor getVisitor(@NotNull ProblemsHolder holder) {
+		return new ClassInspector(holder);
+	}
 
-    public final class ClassInspector extends PhpElementVisitor {
+	public final class ClassInspector extends PhpElementVisitor {
 
-        private ProblemsHolder holder;
+		private ProblemsHolder holder;
 
-        private PhpSpecLocator locator;
+		private PhpSpecLocator locator;
 
-        public ClassInspector(ProblemsHolder holder) {
-            this.holder = holder;
-            this.locator = holder.getProject().getComponent(PhpSpecProject.class).getService(PhpSpecLocator.class);
-        }
+		public ClassInspector(ProblemsHolder holder) {
+			this.holder = holder;
+			this.locator = holder.getProject().getComponent(PhpSpecProject.class).getService(PhpSpecLocator.class);
+		}
 
-        @Override
-        public void visitPhpClass(PhpClass phpClass) {
-            if (phpClass.isInterface() || phpClass.isAbstract()) {
-                return;
-            }
+		@Override
+		public void visitPhpClass(PhpClass phpClass) {
+			if (phpClass.isInterface() || phpClass.isAbstract()) {
+				return;
+			}
 
-            if (!locator.isSpec(phpClass)) {
-                try {
-                    locator.locate(locator.getSpecFQNFor(phpClass));
-                } catch (MissingElementException e) {
-                    LeafPsiElement id = PhpClassUtils.getClassNameIdentifierFrom(phpClass);
-                    holder.registerProblem(id, "Missing spec for class: " + phpClass.getName(), new GenerateSpecForClassFix(phpClass));
-                }
-            }
-        }
-    }
+			if (!locator.isSpec(phpClass)) {
+				try {
+					locator.locate(locator.getSpecFQNFor(phpClass));
+				} catch (MissingElementException e) {
+					LeafPsiElement id = PhpClassUtils.getClassNameIdentifierFrom(phpClass);
+					holder.registerProblem(id, "Missing spec for class: " + phpClass.getName(), new GenerateSpecForClassFix(phpClass));
+				}
+			}
+		}
+	}
 
 }

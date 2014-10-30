@@ -9,7 +9,6 @@ import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider2;
 import org.jetbrains.annotations.Nullable;
 import pl.projectspace.idea.plugins.commons.php.StateComponentInterface;
-import pl.projectspace.idea.plugins.commons.php.code.inspection.DummyPhpElementVisitor;
 import pl.projectspace.idea.plugins.commons.php.psi.PsiTreeUtils;
 import pl.projectspace.idea.plugins.commons.php.utils.annotation.DependsOnPlugin;
 
@@ -22,54 +21,54 @@ import java.util.Collections;
  */
 public abstract class GenericTypeProvider implements PhpTypeProvider2 {
 
-    @Override
-    public char getKey() {
-        return 192;
-    }
+	@Override
+	public char getKey() {
+		return 192;
+	}
 
-    /**
-     * Return context instance for given expression - FQN
-     *
-     * @param expression
-     * @param project
-     * @return
-     */
-    @Override
-    public Collection<? extends PhpNamedElement> getBySignature(String expression, Project project) {
+	/**
+	 * Return context instance for given expression - FQN
+	 *
+	 * @param expression
+	 * @param project
+	 * @return
+	 */
+	@Override
+	public Collection<? extends PhpNamedElement> getBySignature(String expression, Project project) {
 		PsiTreeUtils obj = ServiceManager.getService(project, PsiTreeUtils.class);
 
-		if ( obj == null ) {
+		if (obj == null) {
 			return Collections.emptyList();
 		}
 
-        PhpClass phpClass = obj.getClassByFQN(expression);
+		PhpClass phpClass = obj.getClassByFQN(expression);
 
-        if (phpClass == null) {
-            return Collections.emptyList();
-        }
+		if (phpClass == null) {
+			return Collections.emptyList();
+		}
 
-        return Arrays.asList(phpClass);
-    }
+		return Arrays.asList(phpClass);
+	}
 
 
-    @Nullable
-    @Override
-    public String getType(PsiElement element) {
+	@Nullable
+	@Override
+	public String getType(PsiElement element) {
 
-        return getTypeFor(element);
-    }
+		return getTypeFor(element);
+	}
 
-    protected boolean isEnabled(PsiElement element) {
-        DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
+	protected boolean isEnabled(PsiElement element) {
+		DependsOnPlugin annotation = this.getClass().getAnnotation(DependsOnPlugin.class);
 
-        BaseComponent component = element.getProject().getComponent(annotation.value());
-        if (component instanceof StateComponentInterface) {
-            return ((StateComponentInterface) component).isEnabled();
-        }
+		BaseComponent component = element.getProject().getComponent(annotation.value());
+		if (component instanceof StateComponentInterface) {
+			return ((StateComponentInterface) component).isEnabled();
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    protected abstract String getTypeFor(PsiElement psiElement);
+	protected abstract String getTypeFor(PsiElement psiElement);
 
 }

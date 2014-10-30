@@ -7,7 +7,7 @@ import com.jetbrains.php.PhpIndex;
  * @author Michal Przytulski <michal@przytulski.pl>
  */
 public class PsiTreeUtils extends pl.projectspace.idea.plugins.commons.php.psi.PsiTreeUtils {
-    public PsiTreeUtils(Project project, PhpIndex index) {
-        super(project, index);
-    }
+	public PsiTreeUtils(Project project, PhpIndex index) {
+		super(project, index);
+	}
 }

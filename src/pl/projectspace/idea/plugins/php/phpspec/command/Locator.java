@@ -11,10 +11,10 @@ import java.io.File;
 import java.util.Map;
 
 @State(
-        name = "Locator",
-        storages = {
-                @Storage(id = "default", file="$PROJECT_CONFIG_DIR$/locator.xml", scheme = StorageScheme.DIRECTORY_BASED)
-        }
+		name = "Locator",
+		storages = {
+				@Storage(id = "default", file = "$PROJECT_CONFIG_DIR$/locator.xml", scheme = StorageScheme.DIRECTORY_BASED)
+		}
 )
 
 /**
@@ -22,58 +22,58 @@ import java.util.Map;
  */
 public class Locator {
 
-    private Project project;
+	private Project project;
 
-    public Locator setProject(Project project) {
-        this.project = project;
+	public Locator setProject(Project project) {
+		this.project = project;
 
-        return this;
-    }
+		return this;
+	}
 
-    public String getPath() {
-        String path = getGlobalPath();
-        if (path != null) {
-            return path;
-        }
+	public String getPath() {
+		String path = getGlobalPath();
+		if (path != null) {
+			return path;
+		}
 
-        return getComposerPath();
-    }
+		return getComposerPath();
+	}
 
-    private String getGlobalPath() {
-        Map<String, String> env = System.getenv();
-        String paths = env.get("PATH");
-        String separator = System.getProperty("path.separator");
+	private String getGlobalPath() {
+		Map<String, String> env = System.getenv();
+		String paths = env.get("PATH");
+		String separator = System.getProperty("path.separator");
 
-        for (String path : paths.split(separator)) {
-            File file = new File(path.concat("/phpspec"));
-            if (file.exists()) {
-                return file.getAbsolutePath();
-            }
-        }
+		for (String path : paths.split(separator)) {
+			File file = new File(path.concat("/phpspec"));
+			if (file.exists()) {
+				return file.getAbsolutePath();
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    private String getComposerPath() {
-        ComposerDataService service = ComposerDataService.getInstance(project);
-        if (service.getConfigPath() == null) {
-            return null;
-        }
+	private String getComposerPath() {
+		ComposerDataService service = ComposerDataService.getInstance(project);
+		if (service.getConfigPath() == null) {
+			return null;
+		}
 
-        Composer composer = new pl.projectspace.idea.plugins.commons.php.composer.File(service.getConfigPath()).parse();
+		Composer composer = new pl.projectspace.idea.plugins.commons.php.composer.File(service.getConfigPath()).parse();
 
-        if (!composer.isRequired("phpspec/phpspec")) {
-            return null;
-        }
+		if (!composer.isRequired("phpspec/phpspec")) {
+			return null;
+		}
 
-        String path = project.getBasePath() + "/" + composer.getConfig().getBinDir() + "/phpspec";
+		String path = project.getBasePath() + "/" + composer.getConfig().getBinDir() + "/phpspec";
 
-        File file = new File(path);
-        if (!file.exists()) {
-            return null;
-        }
+		File file = new File(path);
+		if (!file.exists()) {
+			return null;
+		}
 
-        return path;
-    }
+		return path;
+	}
 
 }

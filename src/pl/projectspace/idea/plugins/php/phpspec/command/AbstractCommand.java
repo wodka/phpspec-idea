@@ -1,9 +1,11 @@
 package pl.projectspace.idea.plugins.php.phpspec.command;
 
 import com.intellij.openapi.project.Project;
-import org.apache.commons.lang.ArrayUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Michal Przytulski <michal@przytulski.pl>
@@ -11,53 +13,52 @@ import java.util.*;
 public abstract class AbstractCommand implements CommandInterface {
 
 
-    private final Project project;
-    private HashMap<String,String> namedParameters;
-    private LinkedList<String> parameters;
+	private final Project project;
+	private HashMap<String, String> namedParameters;
+	private LinkedList<String> parameters;
 
-    public AbstractCommand(Project project) {
-        this.project = project;
-        
-        namedParameters = new HashMap<String, String>();
-        parameters = new LinkedList<String>();
-    }
+	public AbstractCommand(Project project) {
+		this.project = project;
 
-    public HashMap<String, String> getNamedParams() {
-        return namedParameters;
-    }
+		namedParameters = new HashMap<String, String>();
+		parameters = new LinkedList<String>();
+	}
 
-    public List<String> getParams() {
-        return parameters;
-    }
+	public HashMap<String, String> getNamedParams() {
+		return namedParameters;
+	}
 
-    public void addNamedParameter(String name, String val) {
-        namedParameters.put(name, val);
-    }
+	public List<String> getParams() {
+		return parameters;
+	}
 
-    public void addParameter(String param) {
-        parameters.add(param);
-    }
+	public void addNamedParameter(String name, String val) {
+		namedParameters.put(name, val);
+	}
 
-    public Project getProject() {
-        return project;
-    }
+	public void addParameter(String param) {
+		parameters.add(param);
+	}
 
-    public String[] getCommandLineArgs() {
-        List<String> params = new ArrayList<String>();
+	public Project getProject() {
+		return project;
+	}
 
-        params.add(getCommand());
+	public String[] getCommandLineArgs() {
+		List<String> params = new ArrayList<String>();
 
-        for (String key : namedParameters.keySet()) {
-            if (key.length() == 1) {
-                params.add("-" + key + " " + namedParameters.get(key));
-            }
-            else {
-                params.add("--" + key + "=" + namedParameters.get(key));
-            }
-        }
+		params.add(getCommand());
 
-        params.addAll(parameters);
+		for (String key : namedParameters.keySet()) {
+			if (key.length() == 1) {
+				params.add("-" + key + " " + namedParameters.get(key));
+			} else {
+				params.add("--" + key + "=" + namedParameters.get(key));
+			}
+		}
 
-        return params.toArray(new String[0]);
-    }
+		params.addAll(parameters);
+
+		return params.toArray(new String[0]);
+	}
 }

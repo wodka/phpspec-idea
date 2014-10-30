@@ -10,17 +10,17 @@ import pl.projectspace.idea.plugins.php.phpspec.PhpSpecProject;
  */
 public abstract class PhpSpecClassDecorator extends PhpClassDecorator {
 
-    /**
-     * Create PhpClass decorator
-     *
-     * @param phpClass
-     */
-    public PhpSpecClassDecorator(PhpClass phpClass) {
-        super(phpClass);
-    }
+	/**
+	 * Create PhpClass decorator
+	 *
+	 * @param phpClass
+	 */
+	public PhpSpecClassDecorator(PhpClass phpClass) {
+		super(phpClass);
+	}
 
-    @Override
-    protected ProjectComponent getComponent() {
-        return getDecoratedObject().getProject().getComponent(PhpSpecProject.class);
-    }
+	@Override
+	protected ProjectComponent getComponent() {
+		return getDecoratedObject().getProject().getComponent(PhpSpecProject.class);
+	}
 }
