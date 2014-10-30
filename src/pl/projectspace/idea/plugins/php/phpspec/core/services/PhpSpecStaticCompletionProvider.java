@@ -36,7 +36,8 @@ public class PhpSpecStaticCompletionProvider {
 
 	public List<Method> getMethodsFor(String className) {
 		if (!map.containsKey(className)) {
-			return null;
+			PhpClass objectBehaviourClass = utils.getClassByFQN(className);
+			map.put(objectBehaviourClass.getFQN(), buildCompletionFor(objectBehaviourClass));
 		}
 
 		return map.get(className);

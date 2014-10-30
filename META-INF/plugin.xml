@@ -1,10 +1,10 @@
 <idea-plugin version="2">
-  <id>pl.projectspace.idea.plugins.php.phpspec</id>
-  <name>phpspec</name>
-  <version>0.2</version>
-  <vendor email="michal@przytulski.pl" url="http://projectspace.pl/phpstorm-plugins">Michal Przytulski</vendor>
+	<id>pl.projectspace.idea.plugins.php.phpspec</id>
+	<name>phpspec</name>
+	<version>0.3</version>
+	<vendor email="michal@przytulski.pl" url="http://projectspace.pl/phpstorm-plugins">Michal Przytulski</vendor>
 
-  <description><![CDATA[
+	<description><![CDATA[
       phpspec support for PhpStorm IDE.
 
       <h3>General:</h3>
@@ -19,7 +19,18 @@
       </ul>
       ]]></description>
 
-  <change-notes><![CDATA[
+	<change-notes><![CDATA[
+      <h3>0.3</h3>
+      <ul>
+          <li>fix autocomplete in idea 13</li>
+          <li>add autocomplete for original file</li>
+          <li>update icons</li>
+      </ul>
+      <h3>0.2</h3>
+      <ul>
+          <li>Custom icons for phpspac files</li>
+          <li>Generate spec file for php class</li>
+      </ul>
       <h3>0.1</h3>
       <ul>
           <li>basic type provider for spec object</li>
@@ -29,60 +40,64 @@
           <li>go to spec from php class / go to clas from spec class</li>
       </ul>
       ]]>
-  </change-notes>
+	</change-notes>
 
-  <idea-version since-build="129.757"/>
-
-
-  <application-components>
-    <!-- Add your application components here -->
-  </application-components>
-
-  <project-components>
-    <component>
-      <implementation-class>pl.projectspace.idea.plugins.php.phpspec.PhpSpecProject</implementation-class>
-    </component>
-  </project-components>
-
-  <actions>
-      <action id="CreateSpecForClass" class="pl.projectspace.idea.plugins.php.phpspec.actions.CreateSpecForClassAction"
-              text="Create spec for class" icon="/pl/projectspace/idea/plugins/php/phpspec/icons/phpspec_16_16.png">
-          <add-to-group group-id="GenerateGroup" anchor="last"/>
-      </action>
-      <action id="OpenSpecForClass" class="pl.projectspace.idea.plugins.php.phpspec.actions.PhpSpecSwitchContext"
-              icon="/pl/projectspace/idea/plugins/php/phpspec/icons/phpspec_16_16.png"
-              text="Go to class spec">
-          <add-to-group group-id="GoToCodeGroup" anchor="last"/>
-          <add-to-group group-id="EditorPopupMenu.GoTo" anchor="last"/>
-          <keyboard-shortcut keymap="$default" first-keystroke="alt meta S"/>
-      </action>
-  </actions>
+	<idea-version since-build="129.757"/>
 
 
-  <extensions defaultExtensionNs="com.intellij">
-      <internalFileTemplate name="Spec Class" />
+	<application-components>
+		<!-- Add your application components here -->
+	</application-components>
 
-      <php.typeProvider2 implementation="pl.projectspace.idea.plugins.php.phpspec.code.type.provider.WrappedObjectTypeProvider"/>
-      <php.typeProvider2 implementation="pl.projectspace.idea.plugins.php.phpspec.core.PhpSpecTypeProvider"/>
+	<project-components>
+		<component>
+			<implementation-class>pl.projectspace.idea.plugins.php.phpspec.PhpSpecProject</implementation-class>
+		</component>
+	</project-components>
 
-      <completion.contributor language="PHP" implementationClass="pl.projectspace.idea.plugins.php.phpspec.code.SpecCompletionContributor"/>
+	<actions>
+		<action id="CreateSpecForClass"
+				class="pl.projectspace.idea.plugins.php.phpspec.actions.CreateSpecForClassAction"
+				text="Create spec for class" icon="/pl/projectspace/idea/plugins/php/phpspec/icons/phpspec_16_16.png">
+			<add-to-group group-id="GenerateGroup" anchor="last"/>
+		</action>
+		<action id="OpenSpecForClass" class="pl.projectspace.idea.plugins.php.phpspec.actions.PhpSpecSwitchContext"
+				icon="/pl/projectspace/idea/plugins/php/phpspec/icons/phpspec_16_16.png"
+				text="Go to class spec">
+			<add-to-group group-id="GoToCodeGroup" anchor="last"/>
+			<add-to-group group-id="EditorPopupMenu.GoTo" anchor="last"/>
+			<keyboard-shortcut keymap="$default" first-keystroke="alt meta S"/>
+		</action>
+	</actions>
 
-      <projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.PhpSpecLocator" />
-      <projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.FileFactory"/>
-      <projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.PsiTreeUtils"/>
-      <projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.PhpSpecFactory"/>
-      <projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.PhpSpecStaticCompletionProvider"/>
 
-      <localInspection language="PHP" shortName="MissingClassSpec" enabledByDefault="true" level="WARNING"
-                       implementationClass="pl.projectspace.idea.plugins.php.phpspec.core.inspection.PhpSpecClassInspection"
-                       displayName="Missing class spec" groupName="Missing spec" />
+	<extensions defaultExtensionNs="com.intellij">
+		<internalFileTemplate name="Spec Class"/>
 
-      <iconProvider implementation="pl.projectspace.idea.plugins.php.phpspec.core.PhpSpecIconProvider" />
+		<php.typeProvider2
+				implementation="pl.projectspace.idea.plugins.php.phpspec.code.type.provider.WrappedObjectTypeProvider"/>
+		<php.typeProvider2 implementation="pl.projectspace.idea.plugins.php.phpspec.core.PhpSpecTypeProvider"/>
 
-  </extensions>
+		<completion.contributor language="PHP"
+								implementationClass="pl.projectspace.idea.plugins.php.phpspec.code.SpecCompletionContributor"/>
 
-  <depends>com.jetbrains.php</depends>
-  <depends>com.intellij.modules.platform</depends>
-  <depends>org.jetbrains.plugins.yaml</depends>
+		<projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.PhpSpecLocator"/>
+		<projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.FileFactory"/>
+		<projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.PsiTreeUtils"/>
+		<projectService serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.PhpSpecFactory"/>
+		<projectService
+				serviceImplementation="pl.projectspace.idea.plugins.php.phpspec.core.services.PhpSpecStaticCompletionProvider"/>
+
+		<localInspection language="PHP" shortName="MissingClassSpec" enabledByDefault="true" level="WARNING"
+						 implementationClass="pl.projectspace.idea.plugins.php.phpspec.core.inspection.PhpSpecClassInspection"
+						 displayName="Missing class spec" groupName="Missing spec"/>
+
+		<iconProvider implementation="pl.projectspace.idea.plugins.php.phpspec.core.PhpSpecIconProvider"/>
+
+	</extensions>
+
+	<depends>com.jetbrains.php</depends>
+	<depends>com.intellij.modules.platform</depends>
+	<depends>org.jetbrains.plugins.yaml</depends>
 
 </idea-plugin>

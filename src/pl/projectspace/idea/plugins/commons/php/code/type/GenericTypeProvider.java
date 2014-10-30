@@ -23,7 +23,7 @@ public abstract class GenericTypeProvider implements PhpTypeProvider2 {
 
 	@Override
 	public char getKey() {
-		return 192;
+		return '\u0150';
 	}
 
 	/**

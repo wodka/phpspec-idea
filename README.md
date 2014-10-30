@@ -20,3 +20,7 @@ Notes:
 
 I basically merged https://github.com/mprzytulski/phpstorm-phpspec and https://github.com/mprzytulski/phpstorm-commons
 -> all the work is comming from @mprzytulski and I'm just bugfixing / providing an info of how to build the plugin
+
+
+check the following project: https://github.com/vivait/phpspec-phpstorm-file-watcher
+-> this adds a file watcher that runs phpspec automatically when you work on a file
