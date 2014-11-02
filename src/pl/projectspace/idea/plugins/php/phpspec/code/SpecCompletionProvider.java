@@ -20,6 +20,7 @@ import com.jetbrains.php.lang.psi.stubs.indexes.PhpClassIndex;
 
 /**
  * @author Michal Przytulski <michal@przytulski.pl>
+ * @author Michael Schramm <michael.schramm@gmail.com>
  */
 @DependsOnPlugin("phpspec")
 public class SpecCompletionProvider extends GenericCompletionProvider {

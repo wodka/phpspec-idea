@@ -12,6 +12,7 @@ import pl.projectspace.idea.plugins.php.phpspec.core.PhpSpecClass;
 
 /**
  * @author Michal Przytulski <michal@przytulski.pl>
+ * @author Michael Schramm <michael.schramm@gmail.com>
  */
 public class WrappedObjectTypeProvider extends GenericTypeProvider {
 
@@ -42,6 +43,11 @@ public class WrappedObjectTypeProvider extends GenericTypeProvider {
 			System.out.println(phpClass.getFQN());
 			System.out.println("spec Class: "+specClass.getDecoratedObject().getFQN());
 */
+			// skip if this is not a phpspec class!
+			if( specClass.getDecoratedObject() == null ) {
+				return null;
+			}
+
 			return specClass.getDecoratedObject().getFQN();
 		}
 
