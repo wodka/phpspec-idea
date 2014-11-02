@@ -12,7 +12,11 @@ public class SpecCompletionContributor extends CompletionContributor {
 	public SpecCompletionContributor() {
 		SpecCompletionProvider p = new SpecCompletionProvider();
 
-		extend(CompletionType.BASIC, PlatformPatterns.psiElement(), p);
+		extend(
+				CompletionType.BASIC,
+				PlatformPatterns.psiElement(), // TODO there seems to be a way to limit this to specific elements
+				p
+		);
 	}
 
 }

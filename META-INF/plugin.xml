@@ -1,6 +1,6 @@
 <idea-plugin version="2">
 	<id>at.ms07.phpspec.idea.plugin</id>
-	<name>phpspec</name>
+	<name>PHPspec</name>
 	<version>0.4</version>
 	<vendor email="michal.schramm@gmail.com" url="https://github.com/wodka/phpspec-idea">Michal Schramm</vendor>
 

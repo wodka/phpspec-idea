@@ -5,7 +5,9 @@ import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import com.jetbrains.php.completion.PhpLookupElement;
+import com.jetbrains.php.completion.insert.PhpReferenceInsertHandler;
 import com.jetbrains.php.lang.psi.elements.Method;
+import com.jetbrains.php.lang.psi.stubs.indexes.PhpFunctionIndex;
 import org.jetbrains.annotations.NotNull;
 import at.ms07.phpspec.idea.plugin.code.completion.GenericCompletionProvider;
 import at.ms07.phpspec.idea.plugin.utils.annotation.DependsOnPlugin;
@@ -48,6 +50,16 @@ public class SpecCompletionProvider extends GenericCompletionProvider {
 			original_class = original_class.replace('/', '\\');
 
 			for (Method method : staticCompletionProvider.getMethodsFor(original_class)) {
+				/*
+				resultSet.addElement(
+					new PhpLookupElement(
+						method.getName(),
+						PhpFunctionIndex.KEY,
+						element.getProject(),
+						PhpReferenceInsertHandler.getInstance()
+					)
+				);
+				*/
 				resultSet.addElement(new PhpLookupElement(method));
 			}
 
