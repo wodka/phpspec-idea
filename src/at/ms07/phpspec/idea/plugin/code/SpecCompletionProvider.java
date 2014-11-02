@@ -50,10 +50,11 @@ public class SpecCompletionProvider extends GenericCompletionProvider {
 			for (Method method : staticCompletionProvider.getMethodsFor(original_class)) {
 				resultSet.addElement(new PhpLookupElement(method));
 			}
-		}
 
-		for (Method method : staticCompletionProvider.getMethodsFor(PhpSpecStaticCompletionProvider.OBJECT_BEHAVIOUR_CLASS)) {
-			resultSet.addElement(new PhpLookupElement(method));
+			// this must be inside of check -> else we have spec auto completion outside as well (what we do not want!)
+			for (Method method : staticCompletionProvider.getMethodsFor(PhpSpecStaticCompletionProvider.OBJECT_BEHAVIOUR_CLASS)) {
+				resultSet.addElement(new PhpLookupElement(method));
+			}
 		}
 	}
 }
