@@ -62,11 +62,11 @@
 	<actions>
 		<action id="CreateSpecForClass"
 				class="at.ms07.phpspec.idea.plugin.action.CreateSpecForClassAction"
-				text="Create spec for class" icon="/pl/projectspace/idea/plugins/php/phpspec/icons/phpspec_16_16.png">
+				text="Create spec for class" icon="/at/ms07/phpspec/idea/plugin/icons/phpspec_16_16.png">
 			<add-to-group group-id="GenerateGroup" anchor="last"/>
 		</action>
 		<action id="OpenSpecForClass" class="at.ms07.phpspec.idea.plugin.action.PhpSpecSwitchContext"
-				icon="/pl/projectspace/idea/plugins/php/phpspec/icons/phpspec_16_16.png"
+				icon="/at/ms07/phpspec/idea/plugin/icons/phpspec_16_16.png"
 				text="Go to class spec">
 			<add-to-group group-id="GoToCodeGroup" anchor="last"/>
 			<add-to-group group-id="EditorPopupMenu.GoTo" anchor="last"/>
